@@ -1,6 +1,7 @@
 function love.load()
     anim8 = require('libraries/anim8')
     love.graphics.setDefaultFilter('nearest','nearest')
+    love.window.setMode(800, 600, {resizable=true, vsync=0, minwidth=400, minheight=300})
     screenX = love.graphics.getWidth()
     screenY = love.graphics.getHeight()
     player = {}
@@ -21,23 +22,36 @@ end
 function love.update(dt)
     local isMoving = false
 
+    screenX = love.graphics.getWidth()
+    screenY = love.graphics.getHeight()
+    love.graphics.rectangle('fill', 0, 0, screenX,screenY)
+
+
     if love.keyboard.isDown('down') or love.keyboard.isDown('s') then
-        player.y = player.y + 1.5
+        if player.y < screenY - 66 then
+            player.y = player.y + 0.5
+        end
         player.currentAnimation = player.animations.down
         isMoving = true
     end
     if love.keyboard.isDown('right') or love.keyboard.isDown('d') then
-        player.x = player.x + 1.5
+        if player.x < screenX - 66 then
+            player.x = player.x + 0.5
+        end
         player.currentAnimation = player.animations.right
         isMoving = true
     end
     if love.keyboard.isDown('up') or love.keyboard.isDown('w') then
-        player.y = player.y - 1.5
+        if player.y > 0 then
+            player.y = player.y - 0.5
+        end
         player.currentAnimation = player.animations.up
         isMoving = true
     end
     if love.keyboard.isDown('left') or love.keyboard.isDown('a') then
-        player.x = player.x - 1.5
+        if player.x > 0 then
+            player.x = player.x - 0.5
+        end
         player.currentAnimation = player.animations.left
         isMoving = true
     end
